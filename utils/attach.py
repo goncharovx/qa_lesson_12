@@ -35,11 +35,31 @@ def add_html(browser):
 #     html = f"<html><body><video width='100%' height='100%'controls autoplay><source src='{video_url}' type='video/mp4'></video></body></html>"
 #     allure.attach(html, f'video_{browser.driver.session_id}', AttachmentType.HTML, '.html')
 
+#
+# def add_video(browser):
+#     video_url = f"{selenoid_url}/video/" + browser.driver.session_id + ".mp4"
+#     html = "<html><body><video width='100%' height='100%' controls autoplay><source src='" \
+#            + video_url \
+#            + "' type='video/mp4'></video></body></html>"
+#     allure.attach(html, 'video_' + browser.driver.session_id, AttachmentType.HTML, '.html')
+
 
 def add_video(browser):
-    video_url = f"{selenoid_url}/video/" + browser.driver.session_id + ".mp4"
-    html = "<html><body><video width='100%' height='100%' controls autoplay><source src='" \
-           + video_url \
-           + "' type='video/mp4'></video></body></html>"
-    allure.attach(html, 'video_' + browser.driver.session_id, AttachmentType.HTML, '.html')
+    session_id = browser.driver.session_id
+    video_url = f"https://selenoid.autotests.cloud/video/{session_id}.mp4"
 
+    print(f"\n📌 VIDEO SESSION ID: {session_id}")  # Выводим session_id в логи
+    print(f"🎥 VIDEO URL: {video_url}\n")
+
+    html = f"""
+    <html>
+    <body>
+    <p>Если видео не воспроизводится, попробуйте <a href="{video_url}" target="_blank">скачать его</a>.</p>
+    <video width="800" height="600" controls>
+        <source src="{video_url}" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+    </body>
+    </html>
+    """
+    allure.attach(html, f'Video {session_id}', AttachmentType.HTML, '.html')
