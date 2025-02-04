@@ -48,7 +48,7 @@ def add_video(browser):
     session_id = browser.driver.session_id
     video_url = f"https://selenoid.autotests.cloud/video/{session_id}.mp4"
 
-    print(f"\n📌 VIDEO SESSION ID: {session_id}")  # Выводим session_id в логи
+    print(f"\n📌 VIDEO SESSION ID: {session_id}")
     print(f"🎥 VIDEO URL: {video_url}\n")
 
     html = f"""
