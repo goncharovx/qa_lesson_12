@@ -31,6 +31,7 @@ def add_html(browser):
     allure.attach(html, 'page_source', AttachmentType.HTML, '.html')
 
 
+
 def add_video(browser):
     session_id = browser.driver.session_id
     video_url = f"{selenoid_url}/video/{session_id}.mp4"
