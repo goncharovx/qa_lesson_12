@@ -1,4 +1,5 @@
 import os
+import time
 
 import allure
 from allure_commons.types import AttachmentType
@@ -31,8 +32,19 @@ def add_html(browser):
 
 
 def add_video(browser):
-    video_url = f"{selenoid_url}/video/" + browser.driver.session_id + ".mp4"
-    html = "<html><body><video width='100%' height='100%' controls autoplay><source src='" \
-           + video_url \
-           + "' type='video/mp4'></video></body></html>"
-    allure.attach(html, 'video_' + browser.driver.session_id, AttachmentType.HTML, '.html')
+    session_id = browser.driver.session_id
+    video_url = f"{selenoid_url}/video/{session_id}.mp4"
+    print(f"Session ID: {session_id}")
+    print(f"Video URL: {video_url}")
+    time.sleep(5)
+    html = f"""
+    <html>
+        <body>
+            <video width="100%" height="100%" controls autoplay>
+                <source src="{video_url}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </body>
+    </html>
+    """
+    allure.attach(html, f"video_{session_id}", AttachmentType.HTML, ".html")

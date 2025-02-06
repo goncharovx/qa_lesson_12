@@ -17,13 +17,15 @@ password = os.getenv('PASSWORD')
 
 
 def pytest_addoption(parser):
+    """Добавление пользовательских параметров для pytest."""
     parser.addoption("--browser_type", action="store", default="chrome", help="Тип браузера (chrome или firefox)")
     parser.addoption("--browser_version", action="store", default="latest", help="Версия браузера")
 
 
 @pytest.fixture(scope="function")
 def setup_browser(request):
-    browser_type = request.config.getoption("--browser_type").lower()
+    """Фикстура для настройки браузера."""
+    browser_type = request.config.getoption("--browser_type")
     browser_version = request.config.getoption("--browser_version")
 
     command_executor_url = f"https://{user}:{password}@{selenoid_url}/wd/hub"
@@ -77,6 +79,5 @@ def setup_browser(request):
     attach.add_screenshot(browser)
     attach.add_html(browser)
     attach.add_video(browser)
-
 
     browser.quit()
