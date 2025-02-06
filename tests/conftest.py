@@ -1,4 +1,5 @@
 import os
+import time
 
 import pytest
 from dotenv import load_dotenv
@@ -74,6 +75,8 @@ def setup_browser(request):
     browser.config.base_url = 'https://demoqa.com'
 
     yield browser
+
+    time.sleep(10)  # Даем время завершить запись видео
 
     attach.add_logs(browser, request.config.getoption("--browser_type"))
     attach.add_screenshot(browser)
